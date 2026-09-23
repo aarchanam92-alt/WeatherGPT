@@ -78,8 +78,124 @@
         <input type="text" placeholder="Ask a weather question...">
         <button>Ask</button>
     </div>
+<script>
+const searchInput = document.querySelector('.search input');
+const searchButton = document.querySelector('.search button');
 
-</div>
+searchButton.addEventListener('click', async () => {
+    const city = searchInput.value.trim();
 
+    if (!city) {
+        alert("Please enter a city name");
+        return;
+    }
+
+    try {
+        // Find the city
+        const geoResponse = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`
+        );
+
+        const geoData = await geoResponse.json();
+
+        if (!geoData.results || geoData.results.length === 0) {
+            alert("City not found");
+            return;
+        }
+
+        const location = geoData.results[0];
+
+        // Get weather
+        const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m&daily=temperature_2m_max,weather_code,precipitation_probability_max&timezone=auto`
+        );
+
+        const weather = await weatherResponse.json();
+
+        // Update main weather card
+        const weatherCard = document.querySelector('.weather-card');
+
+        weatherCard.querySelector('h2').textContent =
+            "📍 " + location.name;
+
+        weatherCard.querySelector('h1').textContent =
+            Math.round(weather.current.temperature_2m) + "°C";
+
+        weatherCard.querySelector('h3').textContent =
+            getWeatherDescription(weather.current.weather_code);
+
+        const details = weatherCard.querySelectorAll('.detail p');
+
+        if (details.length >= 4) {
+            details[0].textContent =
+                "💧 Humidity: " + weather.current.relative_humidity_2m + "%";
+
+            details[1].textContent =
+                "💨 Wind: " + weather.current.wind_speed_10m + " km/h";
+
+            details[2].textContent =
+                "🌡️ Feels Like: " +
+                Math.round(weather.current.apparent_temperature) + "°C";
+
+            details[3].textContent =
+                "🌧️ Rain: " +
+                weather.current.precipitation + " mm";
+        }
+
+        // Update 5-day forecast
+        const forecastCards =
+            document.querySelectorAll('.forecast-card');
+
+        const days = ["Today", "Tomorrow", "Wednesday", "Thursday", "Friday"];
+
+        forecastCards.forEach((card, index) => {
+            if (index < 5) {
+                card.querySelector('h3').textContent =
+                    days[index];
+
+                const emoji = getWeatherEmoji(
+                    weather.daily.weather_code[index]
+                );
+
+                card.querySelector('p').textContent = emoji;
+
+                card.querySelectorAll('h3')[1].textContent =
+                    Math.round(weather.daily.temperature_2m_max[index]) + "°C";
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        alert("Unable to get weather data");
+    }
+});
+
+
+function getWeatherDescription(code) {
+    if (code === 0) return "Clear Sky";
+    if (code <= 3) return "Partly Cloudy";
+    if (code <= 48) return "Foggy";
+    if (code <= 67) return "Rain";
+    if (code <= 77) return "Snow";
+    if (code <= 82) return "Rain Showers";
+    if (code <= 99) return "Thunderstorm";
+
+    return "Unknown";
+}
+
+
+function getWeatherEmoji(code) {
+    if (code === 0) return "☀️";
+    if (code <= 3) return "🌤️";
+    if (code <= 48) return "🌫️";
+    if (code <= 67) return "🌧️";
+    if (code <= 77) return "❄️";
+    if (code <= 82) return "🌦️";
+    if (code <= 99) return "⛈️";
+
+    return "🌤️";
+}
+</script>
 </body>
 </html>
+
