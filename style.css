@@ -1,0 +1,101 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef5f9;
+}
+
+header {
+    padding: 25px;
+    text-align: center;
+    background: #1d5f8a;
+    color: white;
+}
+
+header h1 {
+    margin: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.search {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.search input {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+}
+
+button {
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    background: #1d5f8a;
+    color: white;
+}
+
+.weather-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 3px 10px #ccc;
+}
+
+.weather-card h1 {
+    font-size: 55px;
+    margin: 10px;
+}
+
+.details {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.forecast {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.forecast-card {
+    background: white;
+    padding: 20px;
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px #ccc;
+}
+
+.forecast-card p {
+    font-size: 35px;
+}
+
+.alert {
+    margin-top: 25px;
+    padding: 20px;
+    background: #fff3cd;
+    border-radius: 12px;
+}
+
+.chatbot {
+    margin-top: 25px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+}
+
+.chatbot input {
+    width: 70%;
+    padding: 12px;
+    font-size: 15px;
+}
