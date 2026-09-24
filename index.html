@@ -128,7 +128,7 @@ const weather = await weatherResponse.json();
         weatherCard.querySelector('h3').textContent =
             getWeatherDescription(weather.current.weather_code);
 
-        const details = weatherCard.querySelectorAll('.detail p');
+        const details = weatherCard.querySelectorAll('.details p');
 
         if (details.length >= 4) {
             details[0].textContent =
