@@ -109,7 +109,7 @@ searchButton.addEventListener('click', async () => {
         // Get weather
         // Get weather
 const weatherResponse = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max&timezone=auto`
+    `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m,weather_code&daily=temperature_2m_max,weather_code,precipitation_probility_max&timezone=auto`
 );
 
 const weather = await weatherResponse.json();
