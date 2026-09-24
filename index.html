@@ -20,7 +20,7 @@
         <button>Search</button>
     </div>
 
-    <div class="weather-card">
+    <div class="weather-card"
         <h2>📍 Namakkal</h2>
         <h1>29°C</h1>
         <h3>Partly Cloudy</h3>
@@ -113,6 +113,7 @@ const weatherResponse = await fetch(
 );
 
 const weather = await weatherResponse.json();
+        console.log("Temperature received:", weather.current.temperature_2m);
      
         
 
